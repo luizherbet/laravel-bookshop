@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Middleware\ProtectedRouteAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', [AuthController::class, 'store']);
+
+// Rotas públicas de livros (não precisam de autenticação)
+Route::get('/books/search/{term}', [BookController::class, 'search']);
+Route::get('/books', [BookController::class, 'index']);
+Route::get('/books/{id}', [BookController::class, 'show']);
 
 
 Route::middleware([ProtectedRouteAuth::class])->group(function () {
